@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ง้อเธอได้ไหม 🥺❤️</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Tahoma, sans-serif;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    }
+
+    /* พื้นหลังหัวใจ */
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -50px;
+      font-size: 25px;
+      animation: float 6s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+
+      20% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* การ์ด */
+    .card {
+      position: relative;
+      z-index: 10;
+      width: 350px;
+      max-width: 90%;
+      padding: 35px 25px;
+      text-align: center;
+      background: rgba(255,255,255,0.95);
+      border-radius: 30px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+      animation: appear 1s ease;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: scale(0.7);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .big-heart {
+      font-size: 75px;
+      animation: beat 1s infinite;
+    }
+
+    @keyframes beat {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+    }
+
+    h1 {
+      color: #ff4b6e;
+      margin: 15px 0;
+    }
+
+    p {
+      color: #666;
+      line-height: 1.8;
+    }
+
+    button {
+      border: none;
+      padding: 12px 22px;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 7px;
+      transition: 0.2s;
+    }
+
+    .yes {
+      background: #ff4b6e;
+      color: white;
+      box-shadow: 0 5px 15px rgba(255,75,110,0.4);
+    }
+
+    .yes:hover {
+      transform: scale(1.1);
+      background: #ff244f;
+    }
+
+    .no {
+      background: #eee;
+      color: #555;
+      position: relative;
+    }
+
+    #result {
+      margin-top: 20px;
+      color: #ff4b6e;
+      font-weight: bold;
+      min-height: 30px;
+    }
+
+    /* ปุ่มเพลง */
+    .music {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 20;
+      background: white;
+      color: #ff4b6e;
+      padding: 10px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+
+    /* หน้าสำเร็จ */
+    .success {
+      display: none;
+    }
+
+    .success h1 {
+      font-size: 30px;
+    }
+
+    .emoji {
+      font-size: 45px;
+      margin: 10px;
+    }
+
+    /* เอฟเฟกต์ระเบิดหัวใจ */
+    .burst {
+      position: fixed;
+      pointer-events: none;
+      font-size: 25px;
+      animation: burst 1.5s ease-out forwards;
+      z-index: 100;
+    }
+
+    @keyframes burst {
+      0% {
+        transform: translate(0,0) scale(0);
+        opacity: 1;
+      }
+
+      100% {
+        transform:
+          translate(
+            calc((var(--x)) * 1px),
+            calc((var(--y)) * 1px)
+          )
+          scale(1.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- หัวใจลอย -->
+  <div class="hearts" id="hearts"></div>
+
+  <!-- ปุ่มเพลง -->
+  <button class="music" onclick="toggleMusic()">
+    🎵 เพลง
+  </button>
+
+  <!-- หน้าแรก -->
+  <div class="card" id="mainCard">
+
+    <div class="big-heart">🥺❤️</div>
+
+    <h1>เค้าขอโทษนะ...</h1>
+
+    <p>
+      เค้ารู้ว่าเค้าทำให้เธอเสียใจ<br>
+      เค้าไม่ได้ตั้งใจจริง ๆ นะ 🥺<br>
+      ขอเค้าง้อได้ไหม...
+    </p>
+
+    <button class="yes" onclick="forgive()">
+      หายงอน ❤️
+    </button>
+
+    <button class="no" id="noButton" onclick="notYet()">
+      ยังไม่หาย 😤
+    </button>
+
+    <div id="result"></div>
+
+  </div>
+
+
+  <!-- หน้าสำเร็จ -->
+  <div class="card success" id="successCard">
+
+    <div class="emoji">
+      💕🥰💕
+    </div>
+
+    <h1>เย้!!! 🎉</h1>
+
+    <p>
+      ขอบคุณที่หายงอนนะ 🥺❤️<br>
+      สัญญาว่าจะไม่ทำให้เสียใจอีกแล้ว
+    </p>
+
+    <div style="font-size:50px;">
+      ❤️ 💕 ❤️ 💕 ❤️
+    </div>
+
+    <p>
+      รักเธอที่สุดเลยยย 🫶
+    </p>
+
+  </div>
+
+
+  <script>
+
+    /* =========================
+       สร้างหัวใจลอย
+    ========================= */
+
+    function createHeart() {
+
+      const heart = document.createElement("div");
+
+      heart.className = "heart";
+
+      const emojis = [
+        "❤️",
+        "💕",
+        "💗",
+        "💖",
+        "🥺",
+        "✨"
+      ];
+
+      heart.innerHTML =
+        emojis[Math.floor(Math.random() * emojis.length)];
+
+      heart.style.left =
+        Math.random() * 100 + "%";
+
+      heart.style.animationDuration =
+        (4 + Math.random() * 5) + "s";
+
+      heart.style.fontSize =
+        (15 + Math.random() * 25) + "px";
+
+      document.getElementById("hearts")
+        .appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 9000);
+    }
+
+    setInterval(createHeart, 300);
+
+
+    /* =========================
+       ปุ่มยังไม่หาย
+    ========================= */
+
+    let count = 0;
+
+    function notYet() {
+
+      count++;
+
+      const result =
+        document.getElementById("result");
+
+      const messages = [
+
+        "โอ๋ ๆ 🥺 เค้าขอโทษจริง ๆ นะ",
+
+        "เค้าง้อแล้วน้าาา ❤️",
+
+        "อย่าโกรธเค้านานเลยนะ 🥹",
+
+        "เค้าจะปรับปรุงตัวจริง ๆ 💕",
+
+        "ขออีกครั้งได้ไหม 🥺❤️",
+
+        "เค้ารักเธอนะ อย่าโกรธเค้าเลย 😭❤️"
+      ];
+
+      result.innerHTML =
+        messages[Math.min(count - 1, messages.length - 1)];
+
+      /* ทำให้ปุ่มหนี */
+      if (count >= 3) {
+
+        const button =
+          document.getElementById("noButton");
+
+        const x =
+          Math.random() * 200 - 100;
+
+        const y =
+          Math.random() * 150 - 75;
+
+        button.style.transform =
+          `translate(${x}px, ${y}px)`;
+      }
+    }
+
+
+    /* =========================
+       กดหายงอน
+    ========================= */
+
+    function forgive() {
+
+      createBurst();
+
+      setTimeout(() => {
+
+        document.getElementById("mainCard")
+          .style.display = "none";
+
+        document.getElementById("successCard")
+          .style.display = "block";
+
+      }, 700);
+    }
+
+
+    /* =========================
+       หัวใจระเบิด
+    ========================= */
+
+    function createBurst() {
+
+      for (let i = 0; i < 40; i++) {
+
+        const heart =
+          document.createElement("div");
+
+        heart.className = "burst";
+
+        heart.innerHTML = "❤️";
+
+        heart.style.left = "50%";
+        heart.style.top = "50%";
+
+        const angle =
+          Math.random() * Math.PI * 2;
+
+        const distance =
+          100 + Math.random() * 300;
+
+        heart.style.setProperty(
+          "--x",
+          Math.cos(angle) * distance
+        );
+
+        heart.style.setProperty(
+          "--y",
+          Math.sin(angle) * distance
+        );
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 1500);
+      }
+    }
+
+
+    /* =========================
+       เพลง
+    ========================= */
+
+    let musicOn = false;
+
+    function toggleMusic() {
+
+      musicOn = !musicOn;
+
+      if (musicOn) {
+
+        alert(
+          "🎵 ถ้าอยากใส่เพลง สามารถเพิ่มไฟล์เพลงใน HTML ได้เลย ❤️"
+        );
+
+      } else {
+
+        alert("🔇 ปิดเพลงแล้ว");
+
+      }
+    }
+
+  </script>
+
+</body>
+</html>
